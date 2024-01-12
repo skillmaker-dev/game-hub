@@ -1,4 +1,4 @@
-import { Card, CardBody, HStack, Heading, Image } from "@chakra-ui/react";
+import { Card, CardBody, HStack, Heading, Image, Text } from "@chakra-ui/react";
 import Game from "../entities/Game";
 import PlatformIconList from "./PlatformIconList";
 import CriticScore from "./CriticScore";
@@ -12,22 +12,24 @@ interface Props {
 const GameCard = ({ game }: Props) => {
   return (
     <Card>
-      <Image src={getCroppedImageUrl(game.background_image)} />
-      <CardBody>
-        <HStack marginBottom={3} justifyContent={"space-between"}>
-          {
-            game.parent_platforms != null ? <PlatformIconList
-              platforms={game.parent_platforms.map((p) => p.platform)}
-            /> : null
-          }
+      <Link to={`games/${game.slug}`}>
+        <Image src={getCroppedImageUrl(game.background_image)} />
+        <CardBody>
+          <HStack marginBottom={3} justifyContent={"space-between"}>
+            {
+              game.parent_platforms != null ? <PlatformIconList
+                platforms={game.parent_platforms.map((p) => p.platform)}
+              /> : null
+            }
 
-          <CriticScore score={game.metacritic} />
-        </HStack>
-        <Heading fontSize="2xl">
-          <Link to={`games/${game.slug}`}>{game.name}</Link>
-          <Emoji rating={game.rating_top} />
-        </Heading>
-      </CardBody>
+            <CriticScore score={game.metacritic} />
+          </HStack>
+          <Heading fontSize="2xl">
+            <Text>{game.name}</Text>
+            <Emoji rating={game.rating_top} />
+          </Heading>
+        </CardBody>
+      </Link>
     </Card>
   );
 };
