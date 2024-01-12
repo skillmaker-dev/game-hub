@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <Box overflowY={"hidden"}>
+    <Box height={"100vh"}>
       <NavBar />
-      <Box padding={5}>
+      <Box height={"80vh"} paddingX={5}>
         <Outlet />
       </Box>
     </Box>
