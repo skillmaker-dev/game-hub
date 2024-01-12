@@ -34,7 +34,7 @@ const GenreList = () => {
       <Heading fontSize={"2xl"} marginBottom={3}>
         Genres
       </Heading>
-      <List>
+      <List height={"80vh"} overflowY={"scroll"}>
         {data?.results.map((genre) => (
           <ListItem
             key={genre.id}

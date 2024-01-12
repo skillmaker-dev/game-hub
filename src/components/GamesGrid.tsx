@@ -1,4 +1,4 @@
-import { SimpleGrid, Spinner, Text } from "@chakra-ui/react";
+import { Box, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
 import GameCard from "./GameCard";
 import GameCradSkeleton from "./GameCradSkeleton";
@@ -14,29 +14,33 @@ const GamesGrid = () => {
   const fetchedGamesCount =
     data?.pages.reduce((acc, page) => acc + page.results.length, 0) || 0;
   return (
-    <InfiniteScroll
-      hasMore={!!hasNextPage}
-      next={() => fetchNextPage()}
-      loader={<Spinner />}
-      dataLength={fetchedGamesCount}>
-      <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
-        {isLoading &&
-          skeletons.map((Skeleton) => (
-            <GameCardContainer key={Skeleton}>
-              <GameCradSkeleton key={Skeleton} />
-            </GameCardContainer>
-          ))}
-        {data?.pages.map((page, index) => (
-          <React.Fragment key={index}>
-            {page.results.map((game) => (
-              <GameCardContainer key={game.id}>
-                <GameCard game={game} />
+    <Box id="scrollableBox" height={"75vh"} overflowY={"scroll"}>
+      <InfiniteScroll
+        hasMore={!!hasNextPage}
+        next={() => fetchNextPage()}
+        loader={<Spinner />}
+        style={{ overflow: "hidden" }}
+        dataLength={fetchedGamesCount}
+        scrollableTarget="scrollableBox">
+        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
+          {isLoading &&
+            skeletons.map((Skeleton) => (
+              <GameCardContainer key={Skeleton}>
+                <GameCradSkeleton key={Skeleton} />
               </GameCardContainer>
             ))}
-          </React.Fragment>
-        ))}
-      </SimpleGrid>
-    </InfiniteScroll>
+          {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.results.map((game) => (
+                <GameCardContainer key={game.id}>
+                  <GameCard game={game} />
+                </GameCardContainer>
+              ))}
+            </React.Fragment>
+          ))}
+        </SimpleGrid>
+      </InfiniteScroll>
+    </Box>
   );
 };
 
