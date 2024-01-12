@@ -14,7 +14,7 @@ const GamesGrid = () => {
   const fetchedGamesCount =
     data?.pages.reduce((acc, page) => acc + page.results.length, 0) || 0;
   return (
-    <Box id="scrollableBox" height={"75vh"} overflowY={"scroll"}>
+    <Box id="scrollableBox" height={"70vh"} overflowY={"scroll"}>
       <InfiniteScroll
         hasMore={!!hasNextPage}
         next={() => fetchNextPage()}
