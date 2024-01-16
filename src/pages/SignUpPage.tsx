@@ -1,9 +1,9 @@
-import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Link, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center } from "@chakra-ui/react"
+import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center } from "@chakra-ui/react"
 import uibackground from "../assets/uibackground.svg"
 import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { useRef } from "react"
 import { NavLink } from "react-router-dom"
-function LoginPage() {
+function SignUpPage() {
     const { isOpen, onToggle } = useDisclosure()
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -20,9 +20,9 @@ function LoginPage() {
                 <Stack spacing="8">
                     <Stack spacing="6">
                         <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                            <Heading size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
+                            <Heading size={{ base: 'xs', md: 'sm' }}>Create an account</Heading>
                             <Text color="fg.muted">
-                                Don't have an account? <NavLink to="/signup">Sign up</NavLink>
+                                Already have an account? <NavLink to="/login">Sign In</NavLink>
                             </Text>
                         </Stack>
                     </Stack>
@@ -58,10 +58,7 @@ function LoginPage() {
                                     </InputGroup>
                                 </FormControl>
                             </Stack>
-                            <Text>
-                                <Link href="/forgotpassword">Forgot Password?</Link>
-                            </Text>
-                            <Button>Sign in</Button>
+                            <Button>Sign Up</Button>
                         </Stack>
                     </Box>
                 </Stack>
@@ -70,4 +67,4 @@ function LoginPage() {
     )
 }
 
-export default LoginPage
+export default SignUpPage
