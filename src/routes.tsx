@@ -5,6 +5,7 @@ import GameDetailsPage from "./pages/GameDetailsPage";
 import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
+import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUpPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "/confirmemail/:email",
+    element: <ConfirmEmailPage />,
     errorElement: <ErrorPage />
   }
 ]);

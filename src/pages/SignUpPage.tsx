@@ -44,7 +44,7 @@ function SignUpPage() {
                 setErrorDetails([""])
 
                 if (resp.success) {
-                    navigate('/')
+                    navigate(`/confirmemail/${email}`)
                 }
                 else {
                     setIsError(true)

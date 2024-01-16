@@ -60,6 +60,18 @@ class AuthService {
                 }
             });
     }
+
+    SendConfirmationEmail = (email: string) => {
+        return axiosAuth.post("resendconfirmationemail", { email: email })
+            .then((resp) => {
+                // Handle successful response
+                return { success: true, errors: null, status: resp.status } as AuthResponse;
+            })
+            .catch(error => {
+                // Handle error
+                return { success: false, errors: error.response.data.title, status: error.response.status } as AuthResponse;
+            });
+    }
 }
 
 export default AuthService
