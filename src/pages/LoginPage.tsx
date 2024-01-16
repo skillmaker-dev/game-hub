@@ -1,13 +1,50 @@
-import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Link, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center } from "@chakra-ui/react"
+import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Link, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center, FormErrorMessage } from "@chakra-ui/react"
 import uibackground from "../assets/uibackground.svg"
 import { HiEye, HiEyeOff } from 'react-icons/hi'
-import { useRef } from "react"
-import { NavLink } from "react-router-dom"
+import { FormEvent, useRef, useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
+import AuthService from "../services/auth-service"
+import useAuth from "../hooks/useAuth"
 function LoginPage() {
+    const navigate = useNavigate()
+    const authService = new AuthService()
+    const { loginUser } = useAuth();
     const { isOpen, onToggle } = useDisclosure()
+    const [isLoading, setIsLoading] = useState(false)
+    const [isUnauthorized, setIsUnauthorized] = useState(false)
+    const [isError, setIsError] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passwordRef = useRef<HTMLInputElement>(null)
 
 
+
+
+    const handleSignIn = (e: FormEvent) => {
+        e.preventDefault()
+        setIsLoading(true)
+        let email = emailRef.current?.value ?? ""
+        let password = passwordRef.current?.value ?? ""
+        authService.SignIn({ email, password })
+            .then(resp => {
+                setIsLoading(false)
+                setIsError(false)
+                setIsUnauthorized(false)
+
+                if (resp.success) {
+                    loginUser()
+                    navigate('/')
+                }
+                else if (resp.status == 401)
+                    setIsUnauthorized(true)
+                else
+                    setIsError(true)
+            })
+            .catch(() => {
+                setIsLoading(false)
+                setIsError(true)
+            })
+    }
     const onClickReveal = () => {
         onToggle()
         if (inputRef.current) {
@@ -31,38 +68,47 @@ function LoginPage() {
                         px={{ base: '4', sm: '10' }}
 
                     >
-                        <Stack spacing="6">
-                            <Stack spacing="5">
-                                <FormControl>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
-                                    <Input id="email" type="email" />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="password">Password</FormLabel>
-                                    <InputGroup>
-                                        <InputRightElement>
-                                            <IconButton
-                                                variant="text"
-                                                aria-label={isOpen ? 'Mask password' : 'Reveal password'}
-                                                icon={isOpen ? <HiEyeOff /> : <HiEye />}
-                                                onClick={onClickReveal}
+                        <form onSubmit={handleSignIn}>
+                            <Stack spacing="6">
+                                <Stack spacing="5">
+                                    {isUnauthorized && <FormControl isInvalid={isUnauthorized}>
+                                        <FormErrorMessage>Email or password is incorrect</FormErrorMessage>
+                                    </FormControl>}
+                                    {isError && <FormControl isInvalid={isError}>
+                                        <FormErrorMessage>An error occured, please try again</FormErrorMessage>
+                                    </FormControl>}
+                                    <FormControl isRequired>
+                                        <FormLabel htmlFor="email">Email</FormLabel>
+                                        <Input ref={emailRef} id="email" type="email" />
+                                    </FormControl>
+                                    <FormControl isRequired>
+                                        <FormLabel htmlFor="password">Password</FormLabel>
+                                        <InputGroup>
+                                            <InputRightElement>
+                                                <IconButton
+                                                    variant="text"
+                                                    aria-label={isOpen ? 'Mask password' : 'Reveal password'}
+                                                    icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                                                    onClick={onClickReveal}
+                                                />
+                                            </InputRightElement>
+                                            <Input
+                                                id="password"
+                                                name="password"
+                                                ref={passwordRef}
+                                                type={isOpen ? 'text' : 'password'}
+                                                autoComplete="current-password"
                                             />
-                                        </InputRightElement>
-                                        <Input
-                                            id="password"
-                                            name="password"
-                                            type={isOpen ? 'text' : 'password'}
-                                            autoComplete="current-password"
-                                            required
-                                        />
-                                    </InputGroup>
-                                </FormControl>
+                                        </InputGroup>
+                                    </FormControl>
+                                </Stack>
+                                <Text>
+                                    <Link href="/forgotpassword">Forgot Password?</Link>
+                                </Text>
+                                <Button isLoading={isLoading} type="submit">Sign in</Button>
+
                             </Stack>
-                            <Text>
-                                <Link href="/forgotpassword">Forgot Password?</Link>
-                            </Text>
-                            <Button>Sign in</Button>
-                        </Stack>
+                        </form>
                     </Box>
                 </Stack>
             </Container>
