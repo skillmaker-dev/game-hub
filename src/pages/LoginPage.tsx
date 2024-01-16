@@ -51,6 +51,7 @@ function LoginPage() {
             inputRef.current.focus({ preventScroll: true })
         }
     }
+    // You cna see that i'm not using error messages returned by the api due to the way Identity Endpoints API (introduced in .NET 8) was designed, error messages are not descriptive in some situations
     return (
         <Center w="100vw" h="100vh" backgroundImage={uibackground} backgroundRepeat="no-repeat" backgroundColor="gray.700" backgroundSize="cover">
             <Container backdropFilter="blur(5px)" bg={{ base: 'rgba(26, 26, 58, 0.7)' }} maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>

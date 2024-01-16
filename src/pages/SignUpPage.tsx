@@ -1,12 +1,63 @@
-import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center } from "@chakra-ui/react"
+import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center, FormErrorMessage } from "@chakra-ui/react"
 import uibackground from "../assets/uibackground.svg"
 import { HiEye, HiEyeOff } from 'react-icons/hi'
-import { useRef } from "react"
-import { NavLink } from "react-router-dom"
-function SignUpPage() {
-    const { isOpen, onToggle } = useDisclosure()
-    const inputRef = useRef<HTMLInputElement>(null)
+import { FormEvent, useRef, useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
+import AuthService from "../services/auth-service"
 
+function SignUpPage() {
+    const navigate = useNavigate()
+    const authService = new AuthService()
+    const { isOpen, onToggle } = useDisclosure()
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(false)
+    const [errorDetails, setErrorDetails] = useState<string[]>([""])
+    const [isPasswordConfirm, setIsPasswordConfirm] = useState(true)
+
+    const inputRef = useRef<HTMLInputElement>(null)
+    const emailRef = useRef<HTMLInputElement>(null)
+    const passwordRef = useRef<HTMLInputElement>(null)
+    const confirmPasswordRef = useRef<HTMLInputElement>(null)
+
+    const handleSignUp = (e: FormEvent) => {
+        e.preventDefault()
+        setIsLoading(true)
+        setIsPasswordConfirm(true)
+        setIsError(false)
+        setErrorDetails([""])
+
+        let email = emailRef.current?.value ?? ""
+        let password = passwordRef.current?.value ?? ""
+        let confirmPassword = confirmPasswordRef.current?.value ?? ""
+        if (confirmPassword != password) {
+            setIsPasswordConfirm(false)
+            setIsLoading(false)
+            return
+        }
+
+
+        authService.SignUp({ email, password })
+            .then(resp => {
+                setIsLoading(false)
+                setIsError(false)
+                setErrorDetails([""])
+
+                if (resp.success) {
+                    navigate('/')
+                }
+                else {
+                    setIsError(true)
+                    if (resp.errors)
+                        setErrorDetails(resp.errors)
+
+                }
+            })
+            .catch(() => {
+                setIsLoading(false)
+                setIsError(true)
+            })
+    }
 
     const onClickReveal = () => {
         onToggle()
@@ -31,35 +82,62 @@ function SignUpPage() {
                         px={{ base: '4', sm: '10' }}
 
                     >
-                        <Stack spacing="6">
-                            <Stack spacing="5">
-                                <FormControl>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
-                                    <Input id="email" type="email" />
-                                </FormControl>
-                                <FormControl>
-                                    <FormLabel htmlFor="password">Password</FormLabel>
-                                    <InputGroup>
-                                        <InputRightElement>
-                                            <IconButton
-                                                variant="text"
-                                                aria-label={isOpen ? 'Mask password' : 'Reveal password'}
-                                                icon={isOpen ? <HiEyeOff /> : <HiEye />}
-                                                onClick={onClickReveal}
+                        <form onSubmit={handleSignUp}>
+                            <Stack spacing="6">
+                                <Stack spacing="5">
+                                    {isError && <FormControl isInvalid={isError}>
+                                        {errorDetails.map((item, index) => <FormErrorMessage key={index}>{item}</FormErrorMessage>)}
+                                    </FormControl>}
+                                    <FormControl isRequired>
+                                        <FormLabel htmlFor="email">Email</FormLabel>
+                                        <Input ref={emailRef} id="email" type="email" />
+                                    </FormControl>
+                                    <FormControl isInvalid={!isPasswordConfirm} isRequired>
+                                        <FormLabel htmlFor="password">Password</FormLabel>
+                                        <InputGroup>
+                                            <InputRightElement>
+                                                <IconButton
+                                                    variant="text"
+                                                    aria-label={isOpen ? 'Mask password' : 'Reveal password'}
+                                                    icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                                                    onClick={onClickReveal}
+                                                />
+                                            </InputRightElement>
+                                            <Input
+                                                ref={passwordRef}
+                                                id="password"
+                                                name="password"
+                                                type={isOpen ? 'text' : 'password'}
+                                                autoComplete="current-password"
                                             />
-                                        </InputRightElement>
-                                        <Input
-                                            id="password"
-                                            name="password"
-                                            type={isOpen ? 'text' : 'password'}
-                                            autoComplete="current-password"
-                                            required
-                                        />
-                                    </InputGroup>
-                                </FormControl>
+                                        </InputGroup>
+                                        <FormErrorMessage>Passwords do not match</FormErrorMessage>
+                                    </FormControl>
+                                    <FormControl isInvalid={!isPasswordConfirm} isRequired>
+                                        <FormLabel htmlFor="confirmpassword">Confirm Password</FormLabel>
+                                        <InputGroup>
+                                            <InputRightElement>
+                                                <IconButton
+                                                    variant="text"
+                                                    aria-label={isOpen ? 'Mask password' : 'Reveal password'}
+                                                    icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                                                    onClick={onClickReveal}
+                                                />
+                                            </InputRightElement>
+                                            <Input
+                                                ref={confirmPasswordRef}
+                                                id="confirmpassword"
+                                                name="confirmpassword"
+                                                type={isOpen ? 'text' : 'password'}
+                                                autoComplete="current-password"
+                                            />
+                                        </InputGroup>
+                                        <FormErrorMessage>Passwords do not match</FormErrorMessage>
+                                    </FormControl>
+                                </Stack>
+                                <Button isLoading={isLoading} type="submit">Sign Up</Button>
                             </Stack>
-                            <Button>Sign Up</Button>
-                        </Stack>
+                        </form>
                     </Box>
                 </Stack>
             </Container>
