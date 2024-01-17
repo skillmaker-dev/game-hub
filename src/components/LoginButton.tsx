@@ -9,9 +9,8 @@ function LoginButton() {
     const authService = new AuthService()
 
     const handleLogOut = () => {
-        authService.SignOut().then((resp) => {
-            if (resp.success)
-                logoutUser()
+        authService.SignOut().then(() => {
+            logoutUser()
         })
     }
 

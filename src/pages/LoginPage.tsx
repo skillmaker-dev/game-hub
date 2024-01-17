@@ -6,22 +6,24 @@ import { NavLink, Navigate, useNavigate } from "react-router-dom"
 import AuthService from "../services/auth-service"
 import useAuthStore from "../stores/authenticationStore"
 function LoginPage() {
-    const { loginUser, isUserLoggedIn } = useAuthStore();
-    if (isUserLoggedIn)
-        return <Navigate to="/" />
+
 
     const navigate = useNavigate()
     const authService = new AuthService()
-
-
 
     const { isOpen, onToggle } = useDisclosure()
     const [isLoading, setIsLoading] = useState(false)
     const [isUnauthorized, setIsUnauthorized] = useState(false)
     const [isError, setIsError] = useState(false)
+    const { loginUser, isUserLoggedIn } = useAuthStore();
     const inputRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
+    if (isUserLoggedIn)
+        return <Navigate to="/" />
+
+
+
 
 
 

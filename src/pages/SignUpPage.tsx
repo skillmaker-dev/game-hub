@@ -9,8 +9,6 @@ import useAuthStore from "../stores/authenticationStore"
 function SignUpPage() {
 
     const { isUserLoggedIn } = useAuthStore();
-    if (isUserLoggedIn)
-        return <Navigate to="/" />
 
     const navigate = useNavigate()
     const authService = new AuthService()
@@ -25,6 +23,9 @@ function SignUpPage() {
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
     const confirmPasswordRef = useRef<HTMLInputElement>(null)
+
+    if (isUserLoggedIn)
+        return <Navigate to="/" />
 
     const handleSignUp = (e: FormEvent) => {
         e.preventDefault()

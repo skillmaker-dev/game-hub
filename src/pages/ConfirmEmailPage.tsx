@@ -8,14 +8,13 @@ import useAuthStore from "../stores/authenticationStore";
 function ConfirmEmailPage() {
     const { isUserLoggedIn } = useAuthStore();
 
-
-    if (isUserLoggedIn)
-        return <Navigate to="/" />
-
-
     const { email } = useParams();
     const authService = new AuthService()
     const [sent, setSent] = useState(false)
+
+
+    if (isUserLoggedIn)
+        return <Navigate to="/" />
     const handleResendConfirmEmail = () => {
         setSent(false)
         if (email)
