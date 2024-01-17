@@ -18,7 +18,7 @@ function ConfirmEmailPage() {
         <Center w="100vw" h="100vh" backgroundImage={uibackground} backgroundRepeat="no-repeat" backgroundColor="gray.700" backgroundSize="cover">
             <Container backdropFilter="blur(5px)" bg={{ base: 'rgba(26, 26, 58, 0.7)' }} maxW="lg" py={{ base: '12', md: '24' }} px={{ base: '0', sm: '8' }}>
                 <Stack spacing="8" textAlign="center">
-                    <Heading size={{ base: 'xs', md: 'sm' }}>Confirm your account by clicking the link sent to your email</Heading>
+                    <Heading size={{ base: 'xs', md: 'sm' }} color="white">Confirm your account by clicking the link sent to your email</Heading>
                     <Box
                         py={{ base: '0', sm: '8' }}
                         px={{ base: '4', sm: '10' }}
@@ -29,7 +29,7 @@ function ConfirmEmailPage() {
                                 {
                                     sent ? <Button disabled>Sent</Button> : <Button onClick={handleResendConfirmEmail}>Resend Confirmation Email</Button>
                                 }
-                                <Text color="fg.muted">
+                                <Text color="white">
                                     Already Confirmed? <NavLink to="/login">Sign In</NavLink>
                                 </Text>
                             </Stack>

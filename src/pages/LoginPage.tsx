@@ -1,4 +1,4 @@
-import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Link, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center, FormErrorMessage } from "@chakra-ui/react"
+import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, Stack, InputGroup, InputRightElement, IconButton, useDisclosure, Center, FormErrorMessage } from "@chakra-ui/react"
 import uibackground from "../assets/uibackground.svg"
 import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { FormEvent, useRef, useState } from "react"
@@ -58,8 +58,8 @@ function LoginPage() {
                 <Stack spacing="8">
                     <Stack spacing="6">
                         <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                            <Heading size={{ base: 'xs', md: 'sm' }}>Log in to your account</Heading>
-                            <Text color="fg.muted">
+                            <Heading size={{ base: 'xs', md: 'sm' }} color="white">Log in to your account</Heading>
+                            <Text color="white">
                                 Don't have an account? <NavLink to="/signup">Sign up</NavLink>
                             </Text>
                         </Stack>
@@ -73,27 +73,28 @@ function LoginPage() {
                             <Stack spacing="6">
                                 <Stack spacing="5">
                                     {isUnauthorized && <FormControl isInvalid={isUnauthorized}>
-                                        <FormErrorMessage>Email or password is incorrect</FormErrorMessage>
+                                        <FormErrorMessage >Email or password is incorrect</FormErrorMessage>
                                     </FormControl>}
                                     {isError && <FormControl isInvalid={isError}>
                                         <FormErrorMessage>An error occured, please try again</FormErrorMessage>
                                     </FormControl>}
                                     <FormControl isRequired>
-                                        <FormLabel htmlFor="email">Email</FormLabel>
-                                        <Input ref={emailRef} id="email" type="email" />
+                                        <FormLabel color="white" htmlFor="email">Email</FormLabel>
+                                        <Input color="white" ref={emailRef} id="email" type="email" />
                                     </FormControl>
                                     <FormControl isRequired>
-                                        <FormLabel htmlFor="password">Password</FormLabel>
+                                        <FormLabel color="white" htmlFor="password">Password</FormLabel>
                                         <InputGroup>
                                             <InputRightElement>
                                                 <IconButton
                                                     variant="text"
                                                     aria-label={isOpen ? 'Mask password' : 'Reveal password'}
-                                                    icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                                                    icon={isOpen ? <HiEyeOff color="white" /> : <HiEye color="white" />}
                                                     onClick={onClickReveal}
                                                 />
                                             </InputRightElement>
                                             <Input
+                                                color="white"
                                                 id="password"
                                                 name="password"
                                                 ref={passwordRef}
@@ -103,9 +104,6 @@ function LoginPage() {
                                         </InputGroup>
                                     </FormControl>
                                 </Stack>
-                                <Text>
-                                    <Link href="/forgotpassword">Forgot Password?</Link>
-                                </Text>
                                 <Button isLoading={isLoading} type="submit">Sign in</Button>
 
                             </Stack>

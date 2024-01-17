@@ -71,8 +71,8 @@ function SignUpPage() {
                 <Stack spacing="8">
                     <Stack spacing="6">
                         <Stack spacing={{ base: '2', md: '3' }} textAlign="center">
-                            <Heading size={{ base: 'xs', md: 'sm' }}>Create an account</Heading>
-                            <Text color="fg.muted">
+                            <Heading size={{ base: 'xs', md: 'sm' }} color="white">Create an account</Heading>
+                            <Text color="white">
                                 Already have an account? <NavLink to="/login">Sign In</NavLink>
                             </Text>
                         </Stack>
@@ -89,21 +89,22 @@ function SignUpPage() {
                                         {errorDetails.map((item, index) => <FormErrorMessage key={index}>{item}</FormErrorMessage>)}
                                     </FormControl>}
                                     <FormControl isRequired>
-                                        <FormLabel htmlFor="email">Email</FormLabel>
-                                        <Input ref={emailRef} id="email" type="email" />
+                                        <FormLabel color="white" htmlFor="email">Email</FormLabel>
+                                        <Input color="white" ref={emailRef} id="email" type="email" />
                                     </FormControl>
                                     <FormControl isInvalid={!isPasswordConfirm} isRequired>
-                                        <FormLabel htmlFor="password">Password</FormLabel>
+                                        <FormLabel color="white" htmlFor="password">Password</FormLabel>
                                         <InputGroup>
                                             <InputRightElement>
                                                 <IconButton
                                                     variant="text"
                                                     aria-label={isOpen ? 'Mask password' : 'Reveal password'}
-                                                    icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                                                    icon={isOpen ? <HiEyeOff color="white" /> : <HiEye color="white" />}
                                                     onClick={onClickReveal}
                                                 />
                                             </InputRightElement>
                                             <Input
+                                                color="white"
                                                 ref={passwordRef}
                                                 id="password"
                                                 name="password"
@@ -114,17 +115,18 @@ function SignUpPage() {
                                         <FormErrorMessage>Passwords do not match</FormErrorMessage>
                                     </FormControl>
                                     <FormControl isInvalid={!isPasswordConfirm} isRequired>
-                                        <FormLabel htmlFor="confirmpassword">Confirm Password</FormLabel>
+                                        <FormLabel color="white" htmlFor="confirmpassword">Confirm Password</FormLabel>
                                         <InputGroup>
                                             <InputRightElement>
                                                 <IconButton
                                                     variant="text"
                                                     aria-label={isOpen ? 'Mask password' : 'Reveal password'}
-                                                    icon={isOpen ? <HiEyeOff /> : <HiEye />}
+                                                    icon={isOpen ? <HiEyeOff color="white" /> : <HiEye color="white" />}
                                                     onClick={onClickReveal}
                                                 />
                                             </InputRightElement>
                                             <Input
+                                                color="white"
                                                 ref={confirmPasswordRef}
                                                 id="confirmpassword"
                                                 name="confirmpassword"
