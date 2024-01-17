@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 
-
 interface AuthState {
     isUserLoggedIn: boolean;
     loginUser: () => void;
@@ -9,14 +8,20 @@ interface AuthState {
 
 const useAuthStore = create<AuthState>((set) => ({
     isUserLoggedIn: false,
-    loginUser: () => set({ isUserLoggedIn: true }),
-    logoutUser: () => set({ isUserLoggedIn: false }),
+    loginUser: () => {
+        set({ isUserLoggedIn: true });
+        localStorage.setItem('userLoginState', JSON.stringify(true));
+    },
+    logoutUser: () => {
+        set({ isUserLoggedIn: false });
+        localStorage.removeItem('userLoginState');
+    },
 }));
 
 // Initialize the state based on local storage
 const storedUserLoginState = localStorage.getItem('userLoginState');
 if (storedUserLoginState) {
-    useAuthStore.setState({ isUserLoggedIn: JSON.parse(storedUserLoginState) });
+    useAuthStore.setState((state) => ({ ...state, isUserLoggedIn: JSON.parse(storedUserLoginState) }));
 }
 
 export default useAuthStore;
