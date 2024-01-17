@@ -6,7 +6,6 @@ import NavBar from "../components/NavBar";
 function PrivateRoute() {
 
     const isUserLoggedIn = useAuthStore((state) => state.isUserLoggedIn);
-    console.log(isUserLoggedIn)
     if (isUserLoggedIn) {
 
         return (<Box height={"100vh"}>

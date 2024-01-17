@@ -2,7 +2,8 @@ import axios from "axios";
 import router from "../routes";
 
 export const axiosInstance = axios.create({
-    baseURL: 'https://localhost:7023/api'
+    baseURL: 'https://localhost:7023/api',
+    withCredentials: true
 })
 
 // Add a response interceptor
