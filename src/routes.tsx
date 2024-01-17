@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 import PrivateRoute from "./components/PrivateRoute";
+import FavoritesPage from "./pages/FavoritesPage";
 
 
 const router = createBrowserRouter([
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/favorites",
-        element: <SignUpPage />
+        element: <FavoritesPage />
       }
     ]
   },

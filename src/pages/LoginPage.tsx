@@ -4,11 +4,11 @@ import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { FormEvent, useRef, useState } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
 import AuthService from "../services/auth-service"
-import useAuth from "../hooks/useAuth"
+import useAuthStore from "../stores/authenticationStore"
 function LoginPage() {
     const navigate = useNavigate()
     const authService = new AuthService()
-    const { loginUser } = useAuth();
+    const loginUser = useAuthStore((state) => state.loginUser);
     const { isOpen, onToggle } = useDisclosure()
     const [isLoading, setIsLoading] = useState(false)
     const [isUnauthorized, setIsUnauthorized] = useState(false)

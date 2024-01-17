@@ -4,6 +4,8 @@ import PlatformSelector from "../components/PlatformSelector";
 import SortSelector from "../components/SortSelector";
 import GamesGrid from "../components/GamesGrid";
 import GenreList from "../components/GenreList";
+import NavLinkItem from "../components/NavLinkItem";
+import { HiHeart } from "react-icons/hi";
 
 const HomePage = () => {
   return (
@@ -30,6 +32,7 @@ const HomePage = () => {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={3}>
+          <NavLinkItem title="Favorites" link="/favorites" icon={<HiHeart />} />
           <GenreList />
         </GridItem>
       </Show>

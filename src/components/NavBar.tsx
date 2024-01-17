@@ -3,7 +3,6 @@ import logo from "../assets/logo.webp";
 import ColorModeSwitch from "./ColorModeSwitch";
 import SearchInput from "./SearchInput";
 import { Link } from "react-router-dom";
-import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
 
 const NavBar = () => {
@@ -14,7 +13,6 @@ const NavBar = () => {
       </Link>
       <SearchInput />
       <ColorModeSwitch />
-      <LogoutButton />
       <LoginButton />
     </HStack>
   );

@@ -1,11 +1,21 @@
 import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useAuthStore from "../stores/authenticationStore";
+import { Box } from "@chakra-ui/react";
+import NavBar from "../components/NavBar";
 
 function PrivateRoute() {
 
-    const { isUserLoggedIn } = useAuth()
-    if (isUserLoggedIn)
-        return <Outlet />
+    const isUserLoggedIn = useAuthStore((state) => state.isUserLoggedIn);
+    console.log(isUserLoggedIn)
+    if (isUserLoggedIn) {
+
+        return (<Box height={"100vh"}>
+            <NavBar />
+            <Box height={"80vh"} paddingX={5}>
+                <Outlet />
+            </Box>
+        </Box>)
+    }
     else return <Navigate to="login" replace={true} />
 }
 
