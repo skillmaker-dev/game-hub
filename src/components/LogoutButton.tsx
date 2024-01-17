@@ -1,11 +1,16 @@
 import { Button } from "@chakra-ui/react"
 import { HiLogout } from 'react-icons/hi'
 import useAuth from "../hooks/useAuth";
+import AuthService from "../services/auth-service";
 function LogoutButton() {
     const { isUserLoggedIn, logoutUser } = useAuth();
-
+    const authService = new AuthService()
     const handleLogOut = () => {
-        logoutUser()
+        authService.SignOut().then((resp) => {
+            if (resp.success)
+                logoutUser()
+        })
+
 
     }
     if (!isUserLoggedIn)

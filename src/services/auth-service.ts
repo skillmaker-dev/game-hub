@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosAuth = axios.create({
-    baseURL: 'https://localhost:7023/'
+    baseURL: 'https://localhost:7023/',
+    withCredentials: true
 })
 export interface SignIn_SignUp {
     email: string,
@@ -26,7 +27,7 @@ interface ServerApiResponse {
 
 class AuthService {
     SignIn = (model: SignIn_SignUp): Promise<AuthResponse> => {
-        return axiosAuth.post("login", model)
+        return axiosAuth.post("login?useCookies=true", model)
             .then((resp) => {
                 // Handle successful response
                 return { success: true, errors: null, status: resp.status } as AuthResponse;
@@ -58,6 +59,18 @@ class AuthService {
                 } else {
                     return { success: false, errors: ['An error occurred'], status: error.response?.status } as AuthResponse;
                 }
+            });
+    }
+
+    SignOut = () => {
+        return axiosAuth.post("logout")
+            .then((resp) => {
+                // Handle successful response
+                return { success: true, errors: null, status: resp.status } as AuthResponse;
+            })
+            .catch(error => {
+                // Handle error
+                return { success: false, errors: error.response.data.title, status: error.response.status } as AuthResponse;
             });
     }
 
