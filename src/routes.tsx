@@ -6,6 +6,7 @@ import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -17,6 +18,16 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "games/:slug", element: <GameDetailsPage /> },
     ],
+  },
+  {
+    element: <PrivateRoute />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/favorites",
+        element: <SignUpPage />
+      }
+    ]
   },
   {
     path: "/login",
