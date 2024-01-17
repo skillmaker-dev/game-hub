@@ -1,3 +1,4 @@
+import router from "../routes";
 import { axiosAuth } from "./axiosAuthInstance";
 
 export interface SignIn_SignUp {
@@ -66,6 +67,8 @@ class AuthService {
             })
             .catch(error => {
                 // Handle error
+                if (error.response.status == 401)
+                    router.navigate("/login")
                 return { success: false, errors: error.response.data.title, status: error.response.status } as AuthResponse;
             });
     }

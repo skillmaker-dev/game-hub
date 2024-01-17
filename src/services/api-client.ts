@@ -1,8 +1,7 @@
-import axios, { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
+import { axiosInstance } from "./axiosInstance";
 
-const axiosInstance = axios.create({
-    baseURL: 'https://localhost:7023/api'
-})
+
 
 export interface FetchResponse<T> {
     count: number;
