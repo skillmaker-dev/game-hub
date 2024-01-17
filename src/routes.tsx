@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import ConfirmEmailPage from "./pages/ConfirmEmailPage";
 
+
 const router = createBrowserRouter([
   {
     path: "/",

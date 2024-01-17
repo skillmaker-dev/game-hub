@@ -1,9 +1,5 @@
-import axios from "axios";
+import { axiosAuth } from "./axiosAuthInstance";
 
-const axiosAuth = axios.create({
-    baseURL: 'https://localhost:7023/',
-    withCredentials: true
-})
 export interface SignIn_SignUp {
     email: string,
     password: string
