@@ -2,13 +2,19 @@ import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, S
 import uibackground from "../assets/uibackground.svg"
 import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { FormEvent, useRef, useState } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink, Navigate, useNavigate } from "react-router-dom"
 import AuthService from "../services/auth-service"
 import useAuthStore from "../stores/authenticationStore"
 function LoginPage() {
+    const { loginUser, isUserLoggedIn } = useAuthStore();
+    if (isUserLoggedIn)
+        return <Navigate to="/" />
+
     const navigate = useNavigate()
     const authService = new AuthService()
-    const loginUser = useAuthStore((state) => state.loginUser);
+
+
+
     const { isOpen, onToggle } = useDisclosure()
     const [isLoading, setIsLoading] = useState(false)
     const [isUnauthorized, setIsUnauthorized] = useState(false)
@@ -16,7 +22,6 @@ function LoginPage() {
     const inputRef = useRef<HTMLInputElement>(null)
     const emailRef = useRef<HTMLInputElement>(null)
     const passwordRef = useRef<HTMLInputElement>(null)
-
 
 
 

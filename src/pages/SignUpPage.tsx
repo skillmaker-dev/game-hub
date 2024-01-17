@@ -2,10 +2,16 @@ import { Box, Text, Button, Container, FormControl, FormLabel, Heading, Input, S
 import uibackground from "../assets/uibackground.svg"
 import { HiEye, HiEyeOff } from 'react-icons/hi'
 import { FormEvent, useRef, useState } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { NavLink, Navigate, useNavigate } from "react-router-dom"
 import AuthService from "../services/auth-service"
+import useAuthStore from "../stores/authenticationStore"
 
 function SignUpPage() {
+
+    const { isUserLoggedIn } = useAuthStore();
+    if (isUserLoggedIn)
+        return <Navigate to="/" />
+
     const navigate = useNavigate()
     const authService = new AuthService()
     const { isOpen, onToggle } = useDisclosure()

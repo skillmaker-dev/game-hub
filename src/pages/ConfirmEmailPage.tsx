@@ -1,10 +1,18 @@
 import { Box, Button, Container, Heading, Stack, Center, Text } from "@chakra-ui/react"
 import uibackground from "../assets/uibackground.svg"
-import { NavLink, useParams } from "react-router-dom"
+import { NavLink, Navigate, useParams } from "react-router-dom"
 import AuthService from "../services/auth-service";
 import { useState } from "react";
+import useAuthStore from "../stores/authenticationStore";
 
 function ConfirmEmailPage() {
+    const { isUserLoggedIn } = useAuthStore();
+
+
+    if (isUserLoggedIn)
+        return <Navigate to="/" />
+
+
     const { email } = useParams();
     const authService = new AuthService()
     const [sent, setSent] = useState(false)
