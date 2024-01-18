@@ -5,6 +5,7 @@ const service = new GamesFavoritesService()
 
 const useFavoriteGames = () => {
     return useQuery<FavoriteGame[], Error>({
+        queryKey: ["favgames"],
         queryFn: () => service.GetFavoriteGames(),
     })
 }
