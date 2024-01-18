@@ -1,4 +1,4 @@
-import { SimpleGrid, Text } from "@chakra-ui/react"
+import { Heading, SimpleGrid, Text } from "@chakra-ui/react"
 import GameCardContainer from "../components/GameCardContainer"
 import GameCradSkeleton from "../components/GameCradSkeleton"
 import useFavoriteGames from "../hooks/useFavoriteGames"
@@ -11,21 +11,24 @@ function FavoritesPage() {
     if (error) return <Text>{error.message}</Text>;
 
     return (
-        <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
-            {isLoading &&
-                skeletons.map((Skeleton) => (
-                    <GameCardContainer key={Skeleton}>
-                        <GameCradSkeleton key={Skeleton} />
+        <>
+            <Heading>Favorite Games</Heading>
+            <SimpleGrid columns={{ sm: 1, md: 2, lg: 3, xl: 4 }} spacing={3}>
+                {isLoading &&
+                    skeletons.map((Skeleton) => (
+                        <GameCardContainer key={Skeleton}>
+                            <GameCradSkeleton key={Skeleton} />
+                        </GameCardContainer>
+                    ))}
+
+                {data && data.map((game) => (
+                    <GameCardContainer key={game.slug}>
+                        <FavoriteGameCard game={game} />
                     </GameCardContainer>
                 ))}
 
-            {data && data.map((game) => (
-                <GameCardContainer key={game.slug}>
-                    <FavoriteGameCard game={game} />
-                </GameCardContainer>
-            ))}
-
-        </SimpleGrid>
+            </SimpleGrid>
+        </>
     )
 }
 
