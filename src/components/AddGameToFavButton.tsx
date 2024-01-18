@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { HiHeart } from "react-icons/hi";
 import GamesFavoritesService from "../services/games-favorites-service";
@@ -11,6 +11,9 @@ interface Props {
 
 function AddGameToFavButton({ game }: Props) {
     const [favorite, setFavorite] = useState(game.isinfavorites);
+    useEffect(() => {
+        setFavorite(game?.isinfavorites)
+    }, [game?.isinfavorites])
 
     const handleToggleFavorite = () => {
         const gamesFavoritesService = new GamesFavoritesService();
