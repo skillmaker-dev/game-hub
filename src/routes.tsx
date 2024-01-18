@@ -27,7 +27,7 @@ const router = createBrowserRouter([
         path: "/favorites",
         element: <FavoritesPage />
       },
-      { path: "games/:slug", element: <GameDetailsPage /> },
+      { path: "/games/:slug", element: <GameDetailsPage /> },
     ]
   },
   {
